@@ -15,11 +15,13 @@
 /* Globals */
 /////////////
 extern int SCREEN_HEIGHT;
-extern int SCREEN_LENGHT;
+extern int SCREEN_LENGTH;
+extern char** grid;
 
 //////////////////////
 /* Function Headers */
 //////////////////////
 
+void seaweed_init(void);
 void seaweed_print(void);
 

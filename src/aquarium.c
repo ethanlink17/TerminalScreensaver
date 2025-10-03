@@ -15,6 +15,8 @@
 int SCREEN_HEIGHT = 0;
 int SCREEN_LENGTH = 0;
 
+char** grid;
+
 
 /* Overall pseudo-code of program: (WIP)
  *
@@ -62,12 +64,19 @@ int main(){
     //Can grid size update dynamically to a resized terminal screen using realloc?
     //Probably, should experiment with at some point
 
-    printf("Lines: %d\n", SCREEN_HEIGHT);
-
     // Init
-	int newPosition = 0;
-	int currPosition = 2;
-    char grid[SCREEN_HEIGHT][SCREEN_LENGTH]; //= malloc(SCREEN_LENGTH * sizeof(char) * SCREEN_HEIGHT);
+	//int newPosition = 0;
+	//int currPosition = 2;
+    //char grid[SCREEN_HEIGHT][SCREEN_LENGTH]; //= malloc(SCREEN_LENGTH * sizeof(char) * SCREEN_HEIGHT);
+    
+    grid = malloc( sizeof(char*) * SCREEN_HEIGHT);
+
+    for( int i = 0; i < SCREEN_HEIGHT; i++){
+        grid[i] = malloc( sizeof(char) * SCREEN_LENGTH);
+    }
+
+    seaweed_init();
+    
 
     /* Initialize entire screen */
     for( int i = 0; i < SCREEN_HEIGHT; i++){
@@ -84,25 +93,28 @@ int main(){
     }
 
     /* Draw initial character placement TODO: This is remnant from the PoC */
-    grid[SCREEN_HEIGHT - 4][currPosition] = 'O';
-    grid[SCREEN_HEIGHT - 3][currPosition] = '^';
-    grid[SCREEN_HEIGHT - 2][currPosition] = '|';
-    grid[SCREEN_HEIGHT - 1][currPosition] = '^';
+    grid[SCREEN_HEIGHT - 4][2] = 'O';
+    grid[SCREEN_HEIGHT - 3][2] = '^';
+    grid[SCREEN_HEIGHT - 2][2] = '|';
+    grid[SCREEN_HEIGHT - 1][2] = '^';
 
     /* Main loop */
     while(1)
     {
+
+        static_layer();
+
         /* TODO: Need more dynamic movement, on a per sprite-type basis */
-		newPosition = (currPosition + 1) % (SCREEN_LENGTH - 1);
-		
-        for(int i = 0; i < SCREEN_HEIGHT; i++){
+		//newPosition = (currPosition + 1) % (SCREEN_LENGTH - 1);
+	
+        //for(int i = 0; i < SCREEN_HEIGHT; i++){
 
-            grid[i][newPosition] = grid[i][currPosition];
-            grid[i][currPosition] = FILL_CHAR;
+        //    grid[i][newPosition] = grid[i][currPosition];
+        //    grid[i][currPosition] = FILL_CHAR;
 
-        }
-		
-		currPosition = newPosition;
+        //}
+		//currPosition = newPosition;
+        /* TODO: End bad movement */
 
 		// TODO: Need to figure out when and where to insert necessary ANSI codes
         // TODO: Mess with coloring/formatting
