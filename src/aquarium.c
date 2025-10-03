@@ -6,13 +6,15 @@
 #include <sys/ioctl.h>
 
 /* Defines for ASCII grid size
- * TODO: Make dynamic in future, autofit to terminal size? */
+ * (Only used when I want to make it static rather than autofit */
 //#define SCREEN_LENGTH (10+1)
 //#define SCREEN_HEIGHT 10
 
+/* In development, I want to be able to see the characters
+ * In production, probably want to change this to whitespace */
 #define FILL_CHAR '-'
 
-/* Overall pseudo-code of program:
+/* Overall pseudo-code of program: (WIP)
  *
  * Initialize variables and screen
  *
@@ -56,7 +58,6 @@ int main(){
     // Init
 	int newPosition = 0;
 	int currPosition = 2;
-
     char grid[SCREEN_HEIGHT][SCREEN_LENGTH]; //= malloc(SCREEN_LENGTH * sizeof(char) * SCREEN_HEIGHT);
 
     printf("Multi-line test: \r\n");
@@ -75,7 +76,7 @@ int main(){
         }
     }
 
-    /* Draw initial character placement */
+    /* Draw initial character placement TODO: This is remnant from the PoC */
     grid[SCREEN_HEIGHT - 4][currPosition] = 'O';
     grid[SCREEN_HEIGHT - 3][currPosition] = '^';
     grid[SCREEN_HEIGHT - 2][currPosition] = '|';
@@ -84,6 +85,7 @@ int main(){
     /* Main loop */
     while(1)
     {
+        /* TODO: Need more dynamic movement, on a per sprite-type basis */
 		newPosition = (currPosition + 1) % (SCREEN_LENGTH - 1);
 		
         for(int i = 0; i < SCREEN_HEIGHT; i++){
@@ -102,7 +104,6 @@ int main(){
 		printf("\033[2J");
 		
 		//Print new version of string
-		//printf("\r%s\r\n%s\r\n%s\r\n%s\r\n", grid[0], grid[1], grid[2], grid[3]);
         for(int i = 0; i < SCREEN_HEIGHT; i++){
 		    printf("%s\r\n", grid[i]);
         }
