@@ -1,18 +1,20 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
+/* aquarium.c */
 
-/* Needed to determine size and width of terminal */
-#include <sys/ioctl.h>
+//////////////
+/* Includes */
+//////////////
+#include "aquarium.h"
 
-/* Defines for ASCII grid size
- * (Only used when I want to make it static rather than autofit */
-//#define SCREEN_LENGTH (10+1)
-//#define SCREEN_HEIGHT 10
+/////////////
+/* Defines */
+/////////////
 
-/* In development, I want to be able to see the characters
- * In production, probably want to change this to whitespace */
-#define FILL_CHAR '-'
+/////////////
+/* Globals */
+/////////////
+int SCREEN_HEIGHT = 0;
+int SCREEN_LENGTH = 0;
+
 
 /* Overall pseudo-code of program: (WIP)
  *
@@ -39,19 +41,26 @@
  * 
  * For every frame, start at the furthest back layer, and 
  * work yourself forward */
-//void static_layer(){
-//
-//    //TODO
-//
-//}
+void static_layer(){
+
+    seaweed_print();
+    //waves_print();
+
+}
 
 int main(){
 
     struct winsize win;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &win);
 
-    int SCREEN_HEIGHT = win.ws_row;
-    int SCREEN_LENGTH = win.ws_col;
+    SCREEN_HEIGHT = win.ws_row;
+    SCREEN_LENGTH = win.ws_col;
+
+    //TODO: need to ensure that the screen is of at least a certain size
+    //Should add/remove features based on grid size
+    //
+    //Can grid size update dynamically to a resized terminal screen using realloc?
+    //Probably, should experiment with at some point
 
     printf("Lines: %d\n", SCREEN_HEIGHT);
 
@@ -60,8 +69,6 @@ int main(){
 	int currPosition = 2;
     char grid[SCREEN_HEIGHT][SCREEN_LENGTH]; //= malloc(SCREEN_LENGTH * sizeof(char) * SCREEN_HEIGHT);
 
-    printf("Multi-line test: \r\n");
-    
     /* Initialize entire screen */
     for( int i = 0; i < SCREEN_HEIGHT; i++){
         for( int j = 0; j < SCREEN_LENGTH; j++){
