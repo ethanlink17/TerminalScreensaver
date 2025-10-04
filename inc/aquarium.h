@@ -11,6 +11,7 @@
 #include <sys/ioctl.h>
 
 #include "seaweed.h"
+#include "fish.h"
 
 /////////////
 /* Defines */
@@ -21,7 +22,7 @@
 
 /* In development, I want to be able to see the characters
  * In production, probably want to change this to whitespace */
-#define FILL_CHAR '-'
+#define FILL_CHAR ' '
 
 /////////////
 /* Globals */

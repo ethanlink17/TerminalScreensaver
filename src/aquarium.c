@@ -36,6 +36,23 @@ char** grid;
  *     -Print updated grid to screen
  */
 
+void background_clear(void){
+
+    /* Blank entire screen */
+    for( int i = 0; i < SCREEN_HEIGHT; i++){
+        for( int j = 0; j < SCREEN_LENGTH; j++){
+
+            /* Handle case for string termination */
+            if( j == SCREEN_LENGTH - 1){
+                grid[i][j] = '\0';
+            }
+            else{
+                grid[i][j] = FILL_CHAR;
+            }
+        }
+    }
+
+}
 
 /* Function to re-print the static elements to the screen
  * Effectively, the most background layer of the drawing 
@@ -45,9 +62,13 @@ char** grid;
  * work yourself forward */
 void static_layer(){
 
+    background_clear();
     seaweed_print();
     //waves_print();
+}
 
+void movement_layer(){
+    fish_print();
 }
 
 int main(){
@@ -76,45 +97,21 @@ int main(){
     }
 
     seaweed_init();
+    fish_init();
     
 
-    /* Initialize entire screen */
-    for( int i = 0; i < SCREEN_HEIGHT; i++){
-        for( int j = 0; j < SCREEN_LENGTH; j++){
-
-            /* Handle case for string termination */
-            if( j == SCREEN_LENGTH - 1){
-                grid[i][j] = '\0';
-            }
-            else{
-                grid[i][j] = FILL_CHAR;
-            }
-        }
-    }
-
     /* Draw initial character placement TODO: This is remnant from the PoC */
-    grid[SCREEN_HEIGHT - 4][2] = 'O';
-    grid[SCREEN_HEIGHT - 3][2] = '^';
-    grid[SCREEN_HEIGHT - 2][2] = '|';
-    grid[SCREEN_HEIGHT - 1][2] = '^';
+    //grid[SCREEN_HEIGHT - 4][2] = 'O';
+    //grid[SCREEN_HEIGHT - 3][2] = '^';
+    //grid[SCREEN_HEIGHT - 2][2] = '|';
+    //grid[SCREEN_HEIGHT - 1][2] = '^';
 
     /* Main loop */
     while(1)
     {
 
         static_layer();
-
-        /* TODO: Need more dynamic movement, on a per sprite-type basis */
-		//newPosition = (currPosition + 1) % (SCREEN_LENGTH - 1);
-	
-        //for(int i = 0; i < SCREEN_HEIGHT; i++){
-
-        //    grid[i][newPosition] = grid[i][currPosition];
-        //    grid[i][currPosition] = FILL_CHAR;
-
-        //}
-		//currPosition = newPosition;
-        /* TODO: End bad movement */
+        movement_layer();
 
 		// TODO: Need to figure out when and where to insert necessary ANSI codes
         // TODO: Mess with coloring/formatting
