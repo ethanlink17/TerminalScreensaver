@@ -53,7 +53,7 @@ void seaweed_print(){
 
         index++;        
 
-        // This loop actually adds the seaweed characters
+        // This loop adds the seaweed characters
         for(int j = 0; j < sproutHeight[index]; j++){
             if( (j+i) % 2 == 0){
                 /* Adding 1 to the column here, to give a nice wiggle to the seaweed */
