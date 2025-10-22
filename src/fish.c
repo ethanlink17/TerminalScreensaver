@@ -17,7 +17,7 @@
 /////////////
 #define FISH_HEIGHT 3
 #define FISH_LENGTH 9
-#define MAX_ENTRIES 10 //TODO: This should be done dynamically probably
+#define MAX_ENTRIES 5 //TODO: This should be done dynamically probably
 
 //TODO: When new fish models are introduced, these should be added into fish struct
 #define TOP_LAYER "   _____ "
@@ -38,11 +38,18 @@ void fish_init(){
         fish_list[i].model = 1;
 
         //Start at the middle of screen, on left side
-        fish_list[i].y_coord = SCREEN_HEIGHT / 2;
-        fish_list[i].x_coord = 0;
+        //TODO: Start fish dynamically at different points in the screen
+        //based on the size of the screen
+
+        //fish_list[i].y_coord = SCREEN_HEIGHT / 2;
+        //fish_list[i].x_coord = 0;
+        fish_list[i].x_coord = (rand() % SCREEN_LENGTH) - 10;
+        fish_list[i].y_coord = (rand() % (SCREEN_HEIGHT - 2)) + 2;
+
+        fish_list[i].alive = 1;
     }
 
-    fish_list[0].alive = 1; //TODO: To start, just 1 fish should be alive
+    //fish_list[0].alive = 1; //TODO: To start, just 1 fish should be alive
 }
 
 

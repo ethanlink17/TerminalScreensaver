@@ -126,8 +126,19 @@ int main(){
         fflush( stdout );
 
         // 1 frame per second
-        sleep(1);
+        //sleep(1);
+        // 10 frames per second
+        usleep(100000);
     }
+
+    /* Free malloc'ed space */
+    for( int i = 0; i < SCREEN_HEIGHT; i++){
+        free(grid[i]);
+    }
+
+    free(grid);
+
+
     return 0;
 }
 
