@@ -13,6 +13,7 @@
 /* Globals */
 /////////////
 int SCREEN_HEIGHT = 0;
+int TRUE_SCREEN_LENGTH = 0;
 int SCREEN_LENGTH = 0;
 int interrupt = 0;
 
@@ -45,10 +46,10 @@ void background_clear(void){
 
     /* Blank entire screen */
     for( int i = 0; i < SCREEN_HEIGHT; i++){
-        for( int j = 0; j < SCREEN_LENGTH; j++){
+        for( int j = 0; j < TRUE_SCREEN_LENGTH; j++){
 
             /* Handle case for string termination */
-            if( j == SCREEN_LENGTH - 1){
+            if( j == TRUE_SCREEN_LENGTH - 1){
                 grid[i][j] = '\0';
             }
             else{
@@ -56,7 +57,6 @@ void background_clear(void){
             }
         }
     }
-
 }
 
 /* Function to re-print the static elements to the screen
@@ -82,7 +82,11 @@ int main(){
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &win);
 
     SCREEN_HEIGHT = win.ws_row;
-    SCREEN_LENGTH = win.ws_col;
+
+    //Doing this so that I don't have to worry about overwriting the /0 at the end
+    //of each string, I can just use SCREEN_LENGTH as I want
+    TRUE_SCREEN_LENGTH = win.ws_col;
+    SCREEN_LENGTH = win.ws_col - 2;
 
     /* Initialize catching the Ctrl-C signal in order to clean up nicely */
     signal(SIGINT, sigint_handler);
@@ -96,7 +100,7 @@ int main(){
     grid = malloc( sizeof(char*) * SCREEN_HEIGHT);
 
     for( int i = 0; i < SCREEN_HEIGHT; i++){
-        grid[i] = malloc( sizeof(char) * SCREEN_LENGTH);
+        grid[i] = malloc( sizeof(char) * TRUE_SCREEN_LENGTH);
     }
 
     seaweed_init();
@@ -122,8 +126,8 @@ int main(){
         
 
 
-		//printf("\033[2J");
-        //system("tput clear");
+		//printf("\033[2J"); //DO NOT USE, NOT NEEDED
+        //system("tput clear"); //DO NOT USE, NOT NEEDED
         system("tput home");
         fflush( stdout );
 		
@@ -133,8 +137,6 @@ int main(){
         }
 
         usleep(1000000 / FRAMES_PER_SEC );
-
-        
     }
 
     //Bring cursor back

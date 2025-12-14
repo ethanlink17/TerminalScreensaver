@@ -20,6 +20,7 @@ struct fish_t{
     int x_coord;
     int y_coord;
     int alive;
+    int entering;
 };
 
 /////////////

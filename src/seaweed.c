@@ -49,7 +49,7 @@ void seaweed_print(){
 
     //TODO: add some variance in the spacing between sprouts
     //TODO: Seems that the seaweed does not fill entire length of screen, debug
-    for( int i = AVG_COLS_PER_SPROUT; i < (SCREEN_LENGTH - 1); i += AVG_COLS_PER_SPROUT){
+    for( int i = AVG_COLS_PER_SPROUT; i < SCREEN_LENGTH; i += AVG_COLS_PER_SPROUT){
 
         index++;        
 
