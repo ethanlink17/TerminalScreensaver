@@ -46,7 +46,7 @@ void fish_init(){
         //based on the size of the screen
 
         fish_list[i].x_coord = (rand() % SCREEN_LENGTH) - 10;
-        fish_list[i].y_coord = (rand() % (SCREEN_HEIGHT - 2)) + 2;
+        fish_list[i].y_coord = (rand() % (SCREEN_HEIGHT - 10)) + 5;
 
         fish_list[i].alive = ALIVE;
     }

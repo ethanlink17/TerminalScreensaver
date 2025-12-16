@@ -18,9 +18,9 @@
 /////////////
 #define FISH_HEIGHT 3
 #define FISH_LENGTH 9
-#define MAX_ENTRIES 4 /* TODO: This should be dynamic, probably */
+#define MAX_ENTRIES 10 /* TODO: This should be dynamic, probably */
 #define STANDARD_FISH 1 //TODO: Add addtional fish types, move this to an enum
-#define MAX_DEATH_TIMER 40
+#define MAX_DEATH_TIMER 100
 
 //TODO: When new fish models are introduced, this will need to be updated
 #define TOP_LAYER_RIGHT "   _____ "
