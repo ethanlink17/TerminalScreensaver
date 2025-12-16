@@ -12,7 +12,7 @@ To clean:
 `make clean`
 
 Executable will be placed in bin/ directory. Can run using
-`./bin/aquarium.c`
+`./bin/aquarium`
 
 Only tested in Bash Terminal in Linux Mint
 
