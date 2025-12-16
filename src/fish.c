@@ -15,26 +15,6 @@
 /////////////
 /* Defines */
 /////////////
-#define FISH_HEIGHT 3
-#define FISH_LENGTH 9
-#define MAX_ENTRIES 4 //TODO: This should be done dynamically probably
-#define STANDARD_FISH 1 //TODO: Add additional Fish types 
-#define MAX_DEATH_TIMER 40
-
-//TODO: When new fish models are introduced, these should be added into fish struct
-#define TOP_LAYER_RIGHT "   _____ "
-#define MID_LAYER_RIGHT "|\\/   *_\\"
-#define BOT_LAYER_RIGHT "|/\\_____/"
-
-#define TOP_LAYER_LEFT " _____   "
-#define MID_LAYER_LEFT "/_*   \\/|"
-#define BOT_LAYER_LEFT "\\_____/\\|"
-
-#define LEFT -1
-#define RIGHT 1
-#define SWIM_SPEED 1
-#define ALIVE 1
-#define DEAD 0
 
 /////////////
 /* Globals */
@@ -108,11 +88,11 @@ void spawn_fish(){
 
                 if( fish_list[i].facing == LEFT){
                     fish_list[i].x_coord = SCREEN_LENGTH;
-                    fish_list[i].y_coord = (rand() % (SCREEN_HEIGHT - 2)) + 2;
+                    fish_list[i].y_coord = (rand() % (SCREEN_HEIGHT - 10) + 5);
                 }
                 else{
                     fish_list[i].x_coord = 0;
-                    fish_list[i].y_coord = (rand() % (SCREEN_HEIGHT - 2)) + 2;
+                    fish_list[i].y_coord = (rand() % (SCREEN_HEIGHT - 10)) + 5;
                 }
 
                 fish_list[i].alive = ALIVE;

@@ -17,15 +17,6 @@
 /* Defines */
 /////////////
 
-//Note: This whole row will be '~'s, so it should be outside of the RIPPLES_ROW range!
-#define TOP_OF_WATER_ROW 3
-
-//Keep in mind these row values are Inclusive!
-#define START_RIPPLES_ROW 4
-#define END_RIPPLES_ROW 6
-
-#define RIPPLE_CAL 5 //How often do you want these Ripples to happen?
-
 /////////////
 /* Globals */
 /////////////

@@ -44,8 +44,8 @@ void sigint_handler(int sig_num){
 
 void background_clear(void){
 
-    /* Blank entire screen */
-    for( int i = 0; i < SCREEN_HEIGHT; i++){
+    /* Blank entire screen (except for the (SCREEN_HEIGHT - 1) row, because that's the seafloor */
+    for( int i = 0; i < SCREEN_HEIGHT - 1; i++){
         for( int j = 0; j < TRUE_SCREEN_LENGTH; j++){
 
             /* Handling case for string termination */
