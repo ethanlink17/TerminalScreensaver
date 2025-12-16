@@ -48,7 +48,7 @@ void background_clear(void){
     for( int i = 0; i < SCREEN_HEIGHT; i++){
         for( int j = 0; j < TRUE_SCREEN_LENGTH; j++){
 
-            /* Handle case for string termination */
+            /* Handling case for string termination */
             if( j == TRUE_SCREEN_LENGTH - 1){
                 grid[i][j] = '\0';
             }
@@ -57,6 +57,20 @@ void background_clear(void){
             }
         }
     }
+}
+
+/* Initialize each of the elements we are printing */
+void layer_init(){
+
+    seaweed_init();
+    waves_init();
+    fish_init();
+}
+
+/* Free any structures that we allocated along the way */
+void layer_free(){
+
+    waves_free();
 }
 
 /* Function to re-print the static elements to the screen
@@ -69,7 +83,7 @@ void static_layer(){
 
     background_clear();
     seaweed_print();
-    //waves_print();
+    waves_print();
 }
 
 void movement_layer(){
@@ -103,8 +117,7 @@ int main(){
         grid[i] = malloc( sizeof(char) * TRUE_SCREEN_LENGTH);
     }
 
-    seaweed_init();
-    fish_init();
+    layer_init();
 
     //Hide the Cursor
     printf("\033[?25l");
@@ -141,6 +154,7 @@ int main(){
 
     //Bring cursor back
     printf("\033[?25h");
+
 
     /* Free malloc'ed space */
     for( int i = 0; i < SCREEN_HEIGHT; i++){

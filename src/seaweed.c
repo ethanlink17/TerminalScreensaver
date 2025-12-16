@@ -51,7 +51,7 @@ void seaweed_print(){
     //TODO: Seems that the seaweed does not fill entire length of screen, debug
     for( int i = AVG_COLS_PER_SPROUT; i < SCREEN_LENGTH; i += AVG_COLS_PER_SPROUT){
 
-        index++;        
+        index = (index + 1) % NUM_OF_HEIGHT_VARIANTS;        
 
         // This loop adds the seaweed characters
         for(int j = 0; j < sproutHeight[index]; j++){

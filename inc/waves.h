@@ -1,7 +1,7 @@
-/* fish.h */
+/* waves.h */
 
-#ifndef FISH_H_
-#define FISH_H_
+#ifndef WAVES_H_
+#define WAVES_H_
 
 //////////////
 /* Includes */
@@ -10,35 +10,26 @@
 #include <stdio.h>
 #include <unistd.h>
 
-/* Needed for strncpy() */
-#include <string.h>
+#include "aquarium.h"
 
 /////////////
 /* Defines */
 /////////////
-struct fish_t{
-    int facing; //1 for right, -1 for left
-    int speed;
-    int model;
-    int x_coord;
-    int y_coord;
-    int alive;
-    int death_timer;
-};
 
 /////////////
 /* Globals */
 /////////////
 extern int SCREEN_HEIGHT;
 extern int SCREEN_LENGTH;
+extern int TRUE_SCREEN_LENGTH;
 extern char** grid;
 
 //////////////////////
 /* Function Headers */
 //////////////////////
 
-void fish_init(void);
-void fish_print(void);
+void waves_init(void);
+void waves_print(void);
+void waves_free(void);
 
 #endif
-

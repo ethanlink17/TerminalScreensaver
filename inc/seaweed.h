@@ -1,5 +1,8 @@
 /* seaweed.h */
 
+#ifndef SEAWEED_H_
+#define SEAWEED_H_
+
 //////////////
 /* Includes */
 //////////////
@@ -25,3 +28,4 @@ extern char** grid;
 void seaweed_init(void);
 void seaweed_print(void);
 
+#endif

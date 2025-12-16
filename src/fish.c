@@ -19,6 +19,7 @@
 #define FISH_LENGTH 9
 #define MAX_ENTRIES 4 //TODO: This should be done dynamically probably
 #define STANDARD_FISH 1 //TODO: Add additional Fish types 
+#define MAX_DEATH_TIMER 40
 
 //TODO: When new fish models are introduced, these should be added into fish struct
 #define TOP_LAYER_RIGHT "   _____ "
@@ -87,31 +88,37 @@ void spawn_fish(){
         // there is always the same amount of fish on the screen
         if( fish_list[i].alive == DEAD ){
 
-            if( (rand() % 2) == 0 ){
-                fish_list[i].facing = RIGHT;
+            /* So that fish don't respawn the instant they die, decrement a death timer */
+            if( fish_list[i].death_timer > 0){
+                fish_list[i].death_timer -= 1;
             }
             else{
-                fish_list[i].facing = LEFT;
-            }
-            fish_list[i].speed = SWIM_SPEED;
-            fish_list[i].model = STANDARD_FISH;
 
-            //TODO: Start fish dynamically at different points in the screen
-            //based on the size of the screen
+                if( (rand() % 2) == 0 ){
+                    fish_list[i].facing = RIGHT;
+                }
+                else{
+                    fish_list[i].facing = LEFT;
+                }
+                fish_list[i].speed = SWIM_SPEED;
+                fish_list[i].model = STANDARD_FISH;
 
-            if( fish_list[i].facing == LEFT){
-                fish_list[i].x_coord = SCREEN_LENGTH;
-                fish_list[i].y_coord = (rand() % (SCREEN_HEIGHT - 2)) + 2;
-            }
-            else{
-                fish_list[i].x_coord = 0;
-                fish_list[i].y_coord = (rand() % (SCREEN_HEIGHT - 2)) + 2;
-            }
+                //TODO: Start fish dynamically at different points in the screen
+                //based on the size of the screen
 
-            fish_list[i].alive = ALIVE;
+                if( fish_list[i].facing == LEFT){
+                    fish_list[i].x_coord = SCREEN_LENGTH;
+                    fish_list[i].y_coord = (rand() % (SCREEN_HEIGHT - 2)) + 2;
+                }
+                else{
+                    fish_list[i].x_coord = 0;
+                    fish_list[i].y_coord = (rand() % (SCREEN_HEIGHT - 2)) + 2;
+                }
+
+                fish_list[i].alive = ALIVE;
+            }
         }
     }
-
 }
 
 
@@ -159,6 +166,7 @@ void fish_print(){
                 
                 if(fishy->x_coord - FISH_LENGTH >= SCREEN_LENGTH){
                     fishy->alive = DEAD;
+                    fishy->death_timer = rand() % MAX_DEATH_TIMER;
                     break;
                 }
                 else if( fishy->x_coord - FISH_LENGTH < 0 ){
@@ -177,6 +185,7 @@ void fish_print(){
                 //if x bound is out of the picture, then fish is not alive, don't print it
                 if( (fishy->x_coord + FISH_LENGTH) < 0){
                     fishy->alive = DEAD;
+                    fishy->death_timer = rand() % MAX_DEATH_TIMER;
                     break;
                 }
                 else if( (fishy->x_coord + FISH_LENGTH) > SCREEN_LENGTH ){

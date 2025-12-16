@@ -1,5 +1,8 @@
 /* aquarium.h */
 
+#ifndef AQUARIUM_H_
+#define AQUARIUM_H_
+
 //////////////
 /* Includes */
 //////////////
@@ -15,6 +18,7 @@
 
 #include "seaweed.h"
 #include "fish.h"
+#include "waves.h"
 
 /////////////
 /* Defines */
@@ -40,3 +44,4 @@
 
 void static_layer(void);
 
+#endif
