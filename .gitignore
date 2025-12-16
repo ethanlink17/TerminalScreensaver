@@ -56,3 +56,6 @@ dkms.conf
 
 # Don't want to commit the binary
 /bin
+
+#In case I have any notes I want to keep while developing
+/notes

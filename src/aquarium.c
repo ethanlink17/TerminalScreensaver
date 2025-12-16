@@ -13,7 +13,9 @@
 /* Globals */
 /////////////
 int SCREEN_HEIGHT = 0;
+int TRUE_SCREEN_LENGTH = 0;
 int SCREEN_LENGTH = 0;
+int interrupt = 0;
 
 char** grid;
 
@@ -36,14 +38,18 @@ char** grid;
  *     -Print updated grid to screen
  */
 
+void sigint_handler(int sig_num){
+    interrupt = 1;  
+}
+
 void background_clear(void){
 
-    /* Blank entire screen */
-    for( int i = 0; i < SCREEN_HEIGHT; i++){
-        for( int j = 0; j < SCREEN_LENGTH; j++){
+    /* Blank entire screen (except for the (SCREEN_HEIGHT - 1) row, because that's the seafloor */
+    for( int i = 0; i < SCREEN_HEIGHT - 1; i++){
+        for( int j = 0; j < TRUE_SCREEN_LENGTH; j++){
 
-            /* Handle case for string termination */
-            if( j == SCREEN_LENGTH - 1){
+            /* Handling case for string termination */
+            if( j == TRUE_SCREEN_LENGTH - 1){
                 grid[i][j] = '\0';
             }
             else{
@@ -51,7 +57,20 @@ void background_clear(void){
             }
         }
     }
+}
 
+/* Initialize each of the elements we are printing */
+void layer_init(){
+
+    seaweed_init();
+    waves_init();
+    fish_init();
+}
+
+/* Free any structures that we allocated along the way */
+void layer_free(){
+
+    waves_free();
 }
 
 /* Function to re-print the static elements to the screen
@@ -64,7 +83,7 @@ void static_layer(){
 
     background_clear();
     seaweed_print();
-    //waves_print();
+    waves_print();
 }
 
 void movement_layer(){
@@ -77,7 +96,14 @@ int main(){
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &win);
 
     SCREEN_HEIGHT = win.ws_row;
-    SCREEN_LENGTH = win.ws_col;
+
+    //Doing this so that I don't have to worry about overwriting the /0 at the end
+    //of each string, I can just use SCREEN_LENGTH as I want
+    TRUE_SCREEN_LENGTH = win.ws_col;
+    SCREEN_LENGTH = win.ws_col - 2;
+
+    /* Initialize catching the Ctrl-C signal in order to clean up nicely */
+    signal(SIGINT, sigint_handler);
 
     //TODO: need to ensure that the screen is of at least a certain size
     //Should add/remove features based on grid size
@@ -85,49 +111,59 @@ int main(){
     //Can grid size update dynamically to a resized terminal screen using realloc?
     //Probably, should experiment with at some point
 
-    // Init
-	//int newPosition = 0;
-	//int currPosition = 2;
-    //char grid[SCREEN_HEIGHT][SCREEN_LENGTH]; //= malloc(SCREEN_LENGTH * sizeof(char) * SCREEN_HEIGHT);
-    
     grid = malloc( sizeof(char*) * SCREEN_HEIGHT);
 
     for( int i = 0; i < SCREEN_HEIGHT; i++){
-        grid[i] = malloc( sizeof(char) * SCREEN_LENGTH);
+        grid[i] = malloc( sizeof(char) * TRUE_SCREEN_LENGTH);
     }
 
-    seaweed_init();
-    fish_init();
-    
+    layer_init();
 
-    /* Draw initial character placement TODO: This is remnant from the PoC */
-    //grid[SCREEN_HEIGHT - 4][2] = 'O';
-    //grid[SCREEN_HEIGHT - 3][2] = '^';
-    //grid[SCREEN_HEIGHT - 2][2] = '|';
-    //grid[SCREEN_HEIGHT - 1][2] = '^';
-
+    //Hide the Cursor
+    printf("\033[?25l");
+        
     /* Main loop */
-    while(1)
+    while(!interrupt)
     {
 
         static_layer();
         movement_layer();
 
-		// TODO: Need to figure out when and where to insert necessary ANSI codes
         // TODO: Mess with coloring/formatting
-		// Start with a clear console ANSI code, then print?
-		// Clear terminal
-		printf("\033[2J");
+
+        // Started with using ANSI codes to clear terminal and reset cursor to top left
+        // Learned that the tput utility in linux is simpler
+        // Then learned that we don't even need to clear the terminal, and can ovewrite instead
+        // Clearing terminal actually caused "flickering", not clearing improves visual quality significantly
+        // TODO: for even better performance, can use something "double buffering"
+        
+
+
+		//printf("\033[2J"); //DO NOT USE, NOT NEEDED
+        //system("tput clear"); //DO NOT USE, NOT NEEDED
+        system("tput home");
+        fflush( stdout );
 		
 		//Print new version of string
         for(int i = 0; i < SCREEN_HEIGHT; i++){
 		    printf("%s\r\n", grid[i]);
         }
-        fflush( stdout );
 
-        // 1 frame per second
-        sleep(1);
+        usleep(1000000 / FRAMES_PER_SEC );
     }
+
+    //Bring cursor back
+    printf("\033[?25h");
+
+
+    /* Free malloc'ed space */
+    for( int i = 0; i < SCREEN_HEIGHT; i++){
+        free(grid[i]);
+    }
+
+    free(grid);
+
+
     return 0;
 }
 
