@@ -19,6 +19,7 @@
 #include "seaweed.h"
 #include "fish.h"
 #include "waves.h"
+#include "bubbles.h"
 
 /////////////
 /* Defines */
@@ -33,6 +34,9 @@
 
 /* Uses the usleep() function to sleep between frames based on this value */
 #define FRAMES_PER_SEC 4
+
+#define TRUE 1
+#define FALSE 0
 
 /////////////
 /* Globals */

@@ -88,6 +88,7 @@ void static_layer(){
 
 void movement_layer(){
     fish_print();
+    bubbles_print();
 }
 
 int main(){
