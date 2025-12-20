@@ -10,9 +10,13 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#include "aquarium.h"
+
 /////////////
 /* Defines */
 /////////////
+
+#define SEAFLOOR_ROW (SCREEN_HEIGHT-1)
 
 /* Keep this at an odd number if possible, makes it so the seaweed alternates which way it faces :) */
 /* Probably won't be needed once the distance between the sprouts is randomized */

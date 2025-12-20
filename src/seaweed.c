@@ -37,7 +37,7 @@ void seaweed_init(){
     //NOTE: It only needs to be done at init, because the Background clear intentionally
     //excludes the bottom row (SCREEN_HEIGHT - 1)
     for(int i = 0; i < SCREEN_LENGTH; i++){
-        grid[SCREEN_HEIGHT-1][i] = 'w';
+        grid[SEAFLOOR_ROW][i] = 'w';
     }
 }
 
