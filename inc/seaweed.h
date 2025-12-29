@@ -11,6 +11,7 @@
 #include <unistd.h>
 
 #include "aquarium.h"
+#include "castle.h"
 
 /////////////
 /* Defines */
@@ -27,8 +28,16 @@
 #define MAX_SPROUT_HEIGHT 8
 #define MIN_SPROUT_HEIGHT 2
 
+/* I want to make sure that the Seaweed doesn't overlap with the castle.
+ * Ultimately, the castle prints over the seaweed, but now that I know this 
+ * is happening I need to fix it :)
+ */
+#define END_SEAWEED_COL (START_CASTLE_COL)
+
 /* How often should the seaweed wiggle? (in # of frames) */
 #define WIGGLE_CAL 20
+
+#define FLOOR_CHAR '-'
 
 /////////////
 /* Globals */

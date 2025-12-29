@@ -63,6 +63,7 @@ void background_clear(void){
 void layer_init(){
 
     seaweed_init();
+    castle_init();
     waves_init();
     fish_init();
 }
@@ -83,6 +84,7 @@ void static_layer(){
 
     background_clear();
     seaweed_print();
+    castle_print();
     waves_print();
 }
 

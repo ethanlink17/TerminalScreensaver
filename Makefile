@@ -24,7 +24,7 @@ OBJ_EXT     := o
 
 #Flags, Libraries and Includes
 CFLAGS      := -Werror -Wall -std=gnu99 
-DEBUG_FLAGS := -Werror -Wall -std=gnu99 -g
+DEBUG_FLAGS := -Werror -Wall -std=gnu99 -g -DDEBUG
 LFLAGS      := -fopenmp -lm
 #INC        := -I$(INC_DIR) -I/usr/local/include
 #INCDEP     := -I$(INC_DIR)
@@ -40,7 +40,7 @@ DEPENDS     := $(patsubst $(OBJ_DIR)/%,$(DEP_DIR)/%,$(OBJECTS:.$(OBJ_EXT)=.$(DEP
 
 # Default Make
 #all: resources $(TARGET)
-all: $(TARGET)
+all: $(BIN_DIR) $(OBJ_DIR) $(DEP_DIR) $(TARGET)
 
 # Remake
 redo: cleaner all
@@ -79,6 +79,14 @@ $(TARGET): $(OBJECTS)
 $(OBJ_DIR)/%.$(OBJ_EXT): $(SRC_DIR)/%.$(SRC_EXT)
 	$(CC) $(CFLAGS) $(INC) -c -MD -MP -MF $(DEP_DIR)/$*.$(DEP_EXT) -o $@ $<
 
+$(BIN_DIR):
+	mkdir -p $(BIN_DIR)
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
+$(DEP_DIR):
+	mkdir -p $(DEP_DIR)
 
 #Non-File Targets
 .PHONY: all redo clean cleaner resources directories

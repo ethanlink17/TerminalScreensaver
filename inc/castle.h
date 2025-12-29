@@ -9,12 +9,18 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 
 #include "seaweed.h"
 
 /////////////
 /* Defines */
 /////////////
+
+#define CASTLE_HEIGHT 18
+#define CASTLE_LENGTH 65
+
+#define START_CASTLE_COL (SCREEN_LENGTH - CASTLE_LENGTH - 10)
 
 /////////////
 /* Globals */
@@ -27,6 +33,7 @@ extern char** grid;
 /* Function Headers */
 //////////////////////
 
+void castle_init(void);
 void castle_print(void);
 
 #endif

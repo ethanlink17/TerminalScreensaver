@@ -20,6 +20,7 @@
 #include "fish.h"
 #include "waves.h"
 #include "bubbles.h"
+#include "castle.h"
 
 /////////////
 /* Defines */

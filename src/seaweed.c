@@ -37,7 +37,7 @@ void seaweed_init(){
     //NOTE: It only needs to be done at init, because the Background clear intentionally
     //excludes the bottom row (SCREEN_HEIGHT - 1)
     for(int i = 0; i < SCREEN_LENGTH; i++){
-        grid[SEAFLOOR_ROW][i] = 'w';
+        grid[SEAFLOOR_ROW][i] = FLOOR_CHAR;
     }
 }
 
@@ -55,7 +55,7 @@ void seaweed_print(){
     }
 
     //TODO: add some variance in the spacing between sprouts
-    for( int i = AVG_COLS_PER_SPROUT; i < SCREEN_LENGTH; i += AVG_COLS_PER_SPROUT){
+    for( int i = AVG_COLS_PER_SPROUT; i < END_SEAWEED_COL; i += AVG_COLS_PER_SPROUT){
 
         index = (index + 1) % NUM_OF_HEIGHT_VARIANTS;        
 
