@@ -45,8 +45,8 @@ void fish_init(){
         //TODO: Start fish dynamically at different points in the screen
         //based on the size of the screen
 
-        fish_list[i].x_coord = (rand() % SCREEN_LENGTH) - 10;
-        fish_list[i].y_coord = (rand() % (SCREEN_HEIGHT - 10)) + 5;
+        fish_list[i].x_coord = (rand() % SCREEN_LENGTH);
+        fish_list[i].y_coord = (rand() % (FISH_MAX_Y)) + FISH_MIN_Y;
 
         fish_list[i].alive = ALIVE;
     }
@@ -88,12 +88,11 @@ void spawn_fish(){
 
                 if( fish_list[i].facing == LEFT){
                     fish_list[i].x_coord = SCREEN_LENGTH;
-                    fish_list[i].y_coord = (rand() % (SCREEN_HEIGHT - 10) + 5);
                 }
                 else{
                     fish_list[i].x_coord = 0;
-                    fish_list[i].y_coord = (rand() % (SCREEN_HEIGHT - 10)) + 5;
                 }
+                fish_list[i].y_coord = (rand() % (FISH_MAX_Y) + FISH_MIN_Y);
 
                 fish_list[i].alive = ALIVE;
             }

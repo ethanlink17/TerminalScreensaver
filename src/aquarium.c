@@ -64,6 +64,7 @@ void layer_init(){
 
     seaweed_init();
     castle_init();
+    ship_init();
     waves_init();
     fish_init();
 }
@@ -86,6 +87,8 @@ void static_layer(){
     seaweed_print();
     castle_print();
     waves_print();
+    /* TODO: This should be in the movement layer eventually */
+    ship_print();
 }
 
 void movement_layer(){

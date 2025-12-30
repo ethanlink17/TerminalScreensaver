@@ -21,6 +21,7 @@
 #include "waves.h"
 #include "bubbles.h"
 #include "castle.h"
+#include "ship.h"
 
 /////////////
 /* Defines */
@@ -38,6 +39,12 @@
 
 #define TRUE 1
 #define FALSE 0
+
+#define LEFT -1
+#define RIGHT 1
+
+#define ALIVE 1
+#define DEAD 0
 
 /////////////
 /* Globals */
